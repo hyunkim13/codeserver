@@ -14,5 +14,5 @@ credential:
   - name: userPassWord
     valueFrom:
       ConfigMapKeyRef:
-        name: {{ template "codeserver.fullname" . }}
+        name: {{ template "codeserver.fullname" . }}-configmap
         key: password
