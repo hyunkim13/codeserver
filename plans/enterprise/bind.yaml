@@ -4,7 +4,7 @@ credential:
       serviceRef:
         name: {{ include "codeserver.fullname" . }}-svc
         jsonpath: '{ .spec.clusterIP }'
-{{- if (eq .Values.expose.type "nodePort") }}
+{{- if (eq .Values.service.type "NodePort") }}
   - name: NODE_PORT
     valueFrom:
       serviceRef:
