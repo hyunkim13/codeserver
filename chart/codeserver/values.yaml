@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   registry: registry.saas.sysmasterk8s.com:443
-  repository: base/code
+  repository: base/codeserver
   language: php
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
@@ -42,7 +42,7 @@ securityContext: {}
   # runAsUser: 1000
 
 service:
-  type: ClusterIP
+  type: NodePort
   port: 80
 
 ingress:
@@ -62,7 +62,7 @@ ingress:
   #      - chart-example.local
 
 codeserver:
-  password: ""
+  password: "password"
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

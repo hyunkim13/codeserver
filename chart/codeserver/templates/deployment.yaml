@@ -24,14 +24,13 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "codeserver.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}/{{ .Values.image.repository }}/{{ .Values.image.language }}:{{ .Values.image.tag }}"
+          image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}/{{ .Values.image.language }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           workingDir: /home/coder/coder
           env:
@@ -45,9 +44,6 @@ spec:
             - --bind-addr
             - 0.0.0.0:8080
             - .
-          volumeMounts:
-          - mountPath: /home/coder/coder
-            name: {{ template "codeserver.fullname" . }}-{{ .Values.image.language}}-pvc
           ports:
             - name: http
               containerPort: 80
@@ -62,6 +58,13 @@ spec:
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+          - mountPath: /home/coder/coder
+            name: {{ .Values.image.language }}-pvc
+      volumes:
+      - name: {{ .Values.image.language }}-pvc
+        persistentVolumeClaim:
+          claimName: {{ template "codeserver.fullname" . }}-{{ .Values.image.language }}-pvc
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -73,8 +76,4 @@ spec:
       {{- with .Values.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
-      volumes:
-      - name: {{ template "codeserver.fullname" . }}-{{ .Values.image.language}}-pvc
-        persistentVolumeClaim:
-          claimName: {{ template "codeserver.fullname" . }}-{{ .Values.image.language}}-pvc
       {{- end }}
