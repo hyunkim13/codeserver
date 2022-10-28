@@ -2,7 +2,7 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: {{ template "codeserver.fullname" . }}-{{ .Values.image.language}}-pvc
+  name: {{ template "codeserver.fullname" . }}-pvc
   labels:
 {{ include "codeserver.labels" . | indent 4 }}
 spec:

@@ -37,7 +37,7 @@ spec:
           - name: PASSWORD
             valueFrom:
               configMapKeyRef:
-                name: {{ template "codeserver.fullname" . }}-{{ .Values.image.language }}-configmap
+                name: {{ template "codeserver.fullname" . }}-configmap
                 key: password
           command:
             - /usr/bin/entrypoint.sh
@@ -64,7 +64,7 @@ spec:
       volumes:
       - name: {{ .Values.image.language }}-pvc
         persistentVolumeClaim:
-          claimName: {{ template "codeserver.fullname" . }}-{{ .Values.image.language }}-pvc
+          claimName: {{ template "codeserver.fullname" . }}-pvc
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
