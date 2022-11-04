@@ -40,9 +40,9 @@ helm.sh/chart: {{ include "codeserver.chart" . }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
-platform: platform_service
-taskse: devops
-taskcl: webide
+platform: demand_service
+taskse: demand_devops
+taskcl: demand_webide
 {{- end }}
 
 {{/*
