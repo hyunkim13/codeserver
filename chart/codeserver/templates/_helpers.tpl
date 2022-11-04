@@ -51,6 +51,9 @@ Selector labels
 {{- define "codeserver.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "codeserver.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
+platform: demand_service
+taskse: demand_devops
+taskcl: demand_webide
 {{- end }}
 
 {{/*
